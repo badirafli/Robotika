@@ -1,0 +1,18 @@
+from google.colab import files #mengimpor modul
+import cv2 #mengimpor cv2
+import matplotlib.pyplot as plt #mengimpor matplotlib
+#Unggah gambar
+uploaded = files.upload() #untuk membuka dialog unggah file
+img_path = list(uploaded.keys())[0] #mengambil file yg diunggah
+img = cv2.imread(img_path) # Baca gambar menggunakan fungsi cv2.imread
+#Pisahkan channel warna dan buat histogram
+colors = ('b', 'g', 'r') #mendefinisikan nama nama channel warna
+plt.figure(figsize=(8, 5)) #membuat figure baru ukuran 8x5
+for i, color in enumerate (colors): #melakukan pengulangan untuk setiap channel berwarna b,g,r
+  histogram = cv2.calcHist([img], [i], None, [256], [0, 256]) #menghitung histogram untuk setiap warna
+  plt.plot(histogram, color=color) #memplot histogram untuk channel warna saat ini dengan warna yg sesuai
+  plt.xlim([0, 256]) #mengatur rentang sumbu x dari 0 sampai 256
+plt.title('Color Histogram') #menmbah judul pada grafik
+plt.xlabel('Pixel Value') #menambah label pada x
+plt.ylabel('Frequency') #menambah label pada y
+plt.show() #menampilkan grafik
