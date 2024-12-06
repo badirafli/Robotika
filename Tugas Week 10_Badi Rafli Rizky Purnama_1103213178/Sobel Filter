@@ -1,0 +1,18 @@
+from google.colab import files #mengimpor modul
+import cv2 #mengimpor cv2
+import matplotlib.pyplot as plt #mengimpor matplotlib
+#Unggah gambar
+uploaded = files.upload() #untuk membuka dialog unggah file
+img_path = list(uploaded.keys())[0] #mengambil file yg diunggah
+img = cv2.imread(img_path, 0) # Baca gambar dalam grayscale
+#Terapkan Sobel filter
+sobel_x = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=3) # Tepi horizontal
+sobel_y = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=3) # Tepi vertikal
+sobel_combined = cv2.magnitude (sobel_x, sobel_y) #menggabungkan horizontal dan vertikal
+
+#Tampilkan hasil
+plt.figure(figsize=(15, 5)) #membuat figure baru 15x5
+plt.subplot(1, 3, 1), plt.imshow(sobel_x, cmap='gray'), plt.title('Sobel X') #menampilkan hasil sobel filter horizontal
+plt.subplot(1, 3, 2), plt.imshow(sobel_y, cmap='gray'), plt.title('Sobel Y') #menampilkan hasil sobel filter vertikal
+plt.subplot(1, 3, 3), plt.imshow(sobel_combined, cmap='gray'), plt.title('Combined Sobel') #menampilkan gabungan horizontal dan vertikal
+plt.show() #menampilkan semua subplot
